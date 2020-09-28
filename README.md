@@ -21,8 +21,9 @@ yarn add @meteora-digital/orbit
   width: 100vw;
   height: 100vh;
 }
+```
 
-```es6
+```javascript
 import OrbitSystem from '@meteora-digital/orbit';
 
 const random = (min, max) => {
@@ -42,6 +43,7 @@ for (var i = 0; i < bodies; i++) {
     radius: radius,
   });
 }
+```
 
 System.start();
 ```
