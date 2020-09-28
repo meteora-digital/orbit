@@ -43,10 +43,10 @@ for (var i = 0; i < bodies; i++) {
     radius: radius,
   });
 }
-```
 
 System.start();
 ```
+
 
 ## OrbitSystem Arguments
 
