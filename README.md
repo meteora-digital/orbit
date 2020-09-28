@@ -49,14 +49,14 @@ System.start();
 ## OrbitSystem Arguments
 
 | Argument | Type | Description |
-|--------|------|-------------|
+|----------|------|-------------|
 | 1 | Dom Element | The canvas we want to draw our system in |
 | 2 | Number | Default is 1, the greater the number the more the bodies will attract |
 
 ## Body Options
 
 | Option | Type | Description | Default |
-|--------|------|-------------|
+|--------|------|-------------|---------|
 | x | Number | X Coordinate to place the body | 0 |
 | y | Number | Y Coordinate to place the body | 0 |
 | v | Number | Initial velocity of the body | 0 |
@@ -64,6 +64,9 @@ System.start();
 | mass | Number | How attractive this body is | 1 |
 | radius | Number | The size of our body | 5 |
 | mobile | Boolean | Controls the mobility of the body | true |
+
+## Inspired by
+[guest73's YouTube Video](https://youtu.be/p2quAZ5fVdA)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
