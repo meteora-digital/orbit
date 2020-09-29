@@ -53,7 +53,48 @@ System.start();
 | Argument | Type | Description |
 |----------|------|-------------|
 | 1 | Dom Element | The canvas we want to draw our system in |
-| 2 | Number | Default is 1, the greater the number the more the bodies will attract |
+| 2 | Object | Options | Determines global settings for our system |
+
+## OrbitSystem Options
+
+```Gravity```
+
+determines the global gravity force.
+
+```javascript
+
+{
+  gravity: 1,
+}
+
+```
+
+# OrbitSystem Methods
+
+```createBody```
+
+Creates a new body in the system
+
+```javascript
+
+System.createBody({
+  x: random(0,window.innerWidth),
+  y: random(0, window.innerHeight),
+  mass: mass,
+  radius: radius,
+});
+
+```
+
+```start```
+
+Begins the system
+
+```javascript
+
+System.start();
+
+```
 
 ## Body Options
 
@@ -65,6 +106,9 @@ System.start();
 | angle | Number | The initial angle the body is moving | 0 |
 | mass | Number | How attractive this body is | 1 |
 | radius | Number | The size of our body | 5 |
+| boundary | Number | Radius of interactive area | true |
+| color | string | Colour of the body | '#000000' |
+| trail | number | Length of our trails - limit this depending on computer memory | 0 |
 | mobile | Boolean | Controls the mobility of the body | true |
 
 ## Inspired by

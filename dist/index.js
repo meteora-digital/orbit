@@ -12,7 +12,7 @@ var OrbitSystem = /*#__PURE__*/function () {
   function OrbitSystem(canvas) {
     var _this = this;
 
-    var gravity = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     _classCallCheck(this, OrbitSystem);
 
@@ -20,7 +20,10 @@ var OrbitSystem = /*#__PURE__*/function () {
     this.ctx = this.canvas.getContext('2d');
     this.bodies = [];
     this.started = false;
-    this.G = gravity;
+    this.settings = objectAssign({
+      gravity: 1
+    }, options);
+    this.G = this.settings.gravity;
     attach(window, 'resize', function () {
       return _this.resize();
     });
@@ -87,7 +90,7 @@ var OrbitSystem = /*#__PURE__*/function () {
 
           this.distance = Math.sqrt((this.b1.x - this.b2.x) * (this.b1.x - this.b2.x) + (this.b1.y - this.b2.y) * (this.b1.y - this.b2.y)); // Set a minimum distance
 
-          this.distance = this.distance < this.b1.r + this.b2.r ? this.b1.r + this.b2.r : this.distance; // Gravity equation
+          this.distance = this.distance < this.b1.boundary + this.b2.boundary ? this.b1.boundary + this.b2.boundary : this.distance; // Gravity equation
 
           this.force = this.G * (this.b1.m * this.b2.m) / this.distance / this.distance; // Helpful readability variables
 
@@ -123,11 +126,15 @@ var Body = /*#__PURE__*/function () {
       x: 0,
       y: 0,
       v: 0,
+      color: '#000000',
       angle: 0,
       mass: 1,
       radius: 5,
-      mobile: true
+      boundary: null,
+      mobile: true,
+      trail: 0
     }, options);
+    this.trail = [];
     this.init();
   }
 
@@ -144,10 +151,19 @@ var Body = /*#__PURE__*/function () {
       this.ax = 0;
       this.ay = 0;
       this.mobile = this.settings.mobile;
+      this.boundary = this.settings.boundary == null ? this.settings.radius : this.settings.boundary;
     }
   }, {
     key: "update",
     value: function update(dt) {
+      if (this.settings.trail >= 1) {
+        if (this.trail.length >= this.settings.trail) this.trail.shift();
+        this.trail.push({
+          x: this.x,
+          y: this.y
+        });
+      }
+
       this.vx += this.ax * dt;
       this.vy += this.ay * dt;
       this.x += this.vx * dt;
@@ -159,8 +175,26 @@ var Body = /*#__PURE__*/function () {
     key: "draw",
     value: function draw(ctx) {
       ctx.beginPath();
+      ctx.globalAlpha = 1;
       ctx.arc(this.x, this.y, this.r, 0, 6.28);
+      ctx.fillStyle = this.settings.color;
       ctx.fill();
+      ctx.closePath();
+
+      if (this.settings.trail !== 0) {
+        for (var index = this.trail.length - 1; index > 0; index--) {
+          var point = this.trail[index];
+          this.nextPoint = this.trail[index + 1] || this;
+          ctx.beginPath();
+          ctx.moveTo(point.x, point.y);
+          ctx.lineTo(this.nextPoint.x, this.nextPoint.y);
+          ctx.strokeStyle = this.settings.color;
+          ctx.globalAlpha = index / this.trail.length;
+          ctx.lineWidth = this.r * 2;
+          ctx.stroke();
+          ctx.closePath();
+        }
+      }
     }
   }]);
 
