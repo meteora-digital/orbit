@@ -19,7 +19,7 @@ var OrbitSystem = /*#__PURE__*/function () {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
     this.bodies = [];
-    this.started = false;
+    this.paused = false;
     this.settings = objectAssign({
       gravity: 1
     }, options);
@@ -47,12 +47,17 @@ var OrbitSystem = /*#__PURE__*/function () {
   }, {
     key: "start",
     value: function start() {
-      if (this.started === false) {
-        this.started === true;
+      if (this.paused === false) {
+        this.paused === true;
         this.draw();
       }
 
       ;
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      this.paused = true;
     }
   }, {
     key: "draw",
@@ -73,7 +78,7 @@ var OrbitSystem = /*#__PURE__*/function () {
         }); // Draw the canvas
 
 
-        _this2.draw();
+        if (_this2.paused == false) _this2.draw();
       });
     }
   }, {

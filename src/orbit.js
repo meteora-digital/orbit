@@ -8,7 +8,7 @@ export default class OrbitSystem {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
     this.bodies = [];
-    this.started = false;
+    this.paused = false;
 
     this.settings = objectAssign({
       gravity: 1,
@@ -32,10 +32,14 @@ export default class OrbitSystem {
 
   // Call this to begin the simulation
   start() {
-    if (this.started === false) {
-      this.started === true;
+    if (this.paused === false) {
+      this.paused === true;
       this.draw();
     };
+  }
+
+  stop() {
+    this.paused = true;
   }
 
   draw() {
@@ -53,7 +57,7 @@ export default class OrbitSystem {
       });
 
       // Draw the canvas
-      this.draw();
+      if (this.paused == false) this.draw();
     });
   }
 
