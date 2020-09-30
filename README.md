@@ -96,6 +96,16 @@ System.start();
 
 ```
 
+```stop```
+
+Stops the system
+
+```javascript
+
+System.stop();
+
+```
+
 ## Body Options
 
 | Option | Type | Description | Default |
