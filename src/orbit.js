@@ -31,14 +31,6 @@ export default class OrbitSystem {
     return this.bodies[this.bodies.length - 1];
   }
 
-  changeBody(ID, options = {}) {
-    let body = this.bodies[ID];
-
-    for (let key in options) {
-      body[key] = options[key];
-    }
-  };
-
   // Call this to begin the simulation
   start() {
     if (this.paused === false) {

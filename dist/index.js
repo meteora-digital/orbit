@@ -43,20 +43,10 @@ var OrbitSystem = /*#__PURE__*/function () {
       var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       this.bodies.push(new Body(options));
       return this.bodies[this.bodies.length - 1];
-    }
-  }, {
-    key: "changeBody",
-    value: function changeBody(ID) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var body = this.bodies[ID];
+    } // Call this to begin the simulation
 
-      for (var key in options) {
-        body[key] = options[key];
-      }
-    }
   }, {
     key: "start",
-    // Call this to begin the simulation
     value: function start() {
       if (this.paused === false) {
         this.paused === true;
