@@ -27,8 +27,17 @@ export default class OrbitSystem {
 
   // Helper function to append more bodies to the system
   createBody(options = {}) {
-    this.bodies.push(new Body(options))
+    this.bodies.push(new Body(options));
+    return this.bodies[this.bodies.length - 1];
   }
+
+  changeBody(ID, options = {}) {
+    let body = this.bodies[ID];
+
+    for (let key in options) {
+      body[key] = options[key];
+    }
+  };
 
   // Call this to begin the simulation
   start() {
@@ -82,7 +91,7 @@ export default class OrbitSystem {
         this.distance = (this.distance < this.b1.boundary + this.b2.boundary) ? this.b1.boundary + this.b2.boundary : this.distance;
 
         // Gravity equation
-        this.force = this.G * (this.b1.m * this.b2.m) / this.distance / this.distance;
+        this.force = this.G * (this.b1.mass * this.b2.mass) / this.distance / this.distance;
 
         // Helpful readability variables
         this.nx = (this.b2.x - this.b1.x) / this.distance;
@@ -90,13 +99,13 @@ export default class OrbitSystem {
 
         // Move the bodies unless they are immobile
         if (this.b1.mobile) {
-          this.b1.ax += this.nx * this.force / this.b1.m;
-          this.b1.ay += this.ny * this.force / this.b1.m;
+          this.b1.ax += this.nx * this.force / this.b1.mass;
+          this.b1.ay += this.ny * this.force / this.b1.mass;
         }
 
         if (this.b2.mobile) {
-          this.b2.ax -= this.nx * this.force / this.b2.m;
-          this.b2.ay -= this.ny * this.force / this.b2.m;
+          this.b2.ax -= this.nx * this.force / this.b2.mass;
+          this.b2.ay -= this.ny * this.force / this.b2.mass;
         }
       }
     }
@@ -129,12 +138,13 @@ class Body {
     this.v = this.settings.v;
     this.vx = this.settings.v * Math.cos(this.settings.angle);
     this.vy = this.settings.v * Math.sin(this.settings.angle);
-    this.m = this.settings.mass;
-    this.r = this.settings.radius * dpr;
+    this.mass = this.settings.mass;
+    this.radius = this.settings.radius * dpr;
     this.ax = 0;
     this.ay = 0;
     this.mobile = this.settings.mobile;
-    this.boundary = (this.settings.boundary == null) ? this.settings.radius : this.settings.boundary;
+    this.color = this.settings.color;
+    this.boundary = (this.settings.boundary == null) ? this.settings.radius : this.settings.boundary * dpr;
   }
 
   update(dt) {
@@ -159,8 +169,8 @@ class Body {
   draw(ctx) {
     ctx.beginPath();
     ctx.globalAlpha = 1;
-    ctx.arc(this.x,this.y,this.r,0,6.28);
-    ctx.fillStyle = this.settings.color;
+    ctx.arc(this.x,this.y,this.radius,0,6.28);
+    ctx.fillStyle = this.color;
     ctx.fill();
     ctx.closePath();
 
@@ -172,9 +182,9 @@ class Body {
         ctx.beginPath();
         ctx.moveTo(point.x,point.y);
         ctx.lineTo(this.nextPoint.x, this.nextPoint.y);
-        ctx.strokeStyle = this.settings.color;
+        ctx.strokeStyle = this.color;
         ctx.globalAlpha = index / this.trail.length;
-        ctx.lineWidth = this.r * 2;
+        ctx.lineWidth = this.radius * 2;
         ctx.stroke();
         ctx.closePath();
       }
