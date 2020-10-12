@@ -1,6 +1,6 @@
 {
   "name": "@meteora-digital/orbit",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Orbiting bodies",
   "main": "dist/index.js",
   "scripts": {
