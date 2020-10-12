@@ -30,9 +30,9 @@ const random = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-const System = new OrbitSystem(document.querySelector('canvas.login-canvas'));
+const System = new OrbitSystem(document.querySelector('canvas.canvas-orbit'));
 
-for (var i = 0; i < bodies; i++) {
+for (var i = 0; i < 30; i++) {
   let mass = random(300,500);
   let radius = mass / 100;
 
