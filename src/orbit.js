@@ -1,5 +1,3 @@
-import { objectAssign, attach } from '@meteora-digital/helpers';
-
 // Set's the DPR of the canvas
 const dpr = window.devicePixelRatio || 1;
 
@@ -10,13 +8,20 @@ export default class OrbitSystem {
     this.bodies = [];
     this.paused = false;
 
-    this.settings = objectAssign({
+    this.settings = {
       gravity: 1,
-    }, options);
+    };
+
+    // Merge the settings with the options
+    for (const key in this.settings) {
+      if (Object.hasOwnProperty.call(this.settings, key) && options.hasOwnProperty(key)) {
+        this.settings[key] = options[key];
+      }
+    }
 
     this.G = this.settings.gravity;
 
-    attach(window, 'resize', () => this.resize());
+    window.addEventListener('resize', () => this.resize());
   }
 
   // Resize the canvas to fill the window
@@ -106,7 +111,7 @@ export default class OrbitSystem {
 
 class Body {
   constructor(options = {}) {
-    this.settings = objectAssign({
+    this.settings = {
       x: 0,
       y: 0,
       v: 0,
@@ -117,7 +122,14 @@ class Body {
       boundary: null,
       mobile: true,
       trail: 0,
-    }, options);
+    };
+
+    // Merge the settings with the options
+    for (const key in this.settings) {
+      if (Object.hasOwnProperty.call(this.settings, key) && options.hasOwnProperty(key)) {
+        this.settings[key] = options[key];
+      }
+    }
 
     this.trail = [];
 

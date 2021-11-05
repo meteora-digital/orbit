@@ -4,8 +4,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-import { objectAssign, attach } from '@meteora-digital/helpers'; // Set's the DPR of the canvas
-
+// Set's the DPR of the canvas
 var dpr = window.devicePixelRatio || 1;
 
 var OrbitSystem = /*#__PURE__*/function () {
@@ -20,11 +19,18 @@ var OrbitSystem = /*#__PURE__*/function () {
     this.ctx = this.canvas.getContext('2d');
     this.bodies = [];
     this.paused = false;
-    this.settings = objectAssign({
+    this.settings = {
       gravity: 1
-    }, options);
+    }; // Merge the settings with the options
+
+    for (var key in this.settings) {
+      if (Object.hasOwnProperty.call(this.settings, key) && options.hasOwnProperty(key)) {
+        this.settings[key] = options[key];
+      }
+    }
+
     this.G = this.settings.gravity;
-    attach(window, 'resize', function () {
+    window.addEventListener('resize', function () {
       return _this.resize();
     });
   } // Resize the canvas to fill the window
@@ -128,7 +134,7 @@ var Body = /*#__PURE__*/function () {
 
     _classCallCheck(this, Body);
 
-    this.settings = objectAssign({
+    this.settings = {
       x: 0,
       y: 0,
       v: 0,
@@ -139,7 +145,14 @@ var Body = /*#__PURE__*/function () {
       boundary: null,
       mobile: true,
       trail: 0
-    }, options);
+    }; // Merge the settings with the options
+
+    for (var key in this.settings) {
+      if (Object.hasOwnProperty.call(this.settings, key) && options.hasOwnProperty(key)) {
+        this.settings[key] = options[key];
+      }
+    }
+
     this.trail = [];
     this.init();
   }

@@ -4,10 +4,7 @@
   "description": "Orbiting bodies",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"No test specified\""
-  },
-  "dependencies": {
-    "@meteora-digital/helpers": "latest"
+    "test": "npm i && gulp"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
