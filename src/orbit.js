@@ -22,6 +22,8 @@ export default class OrbitSystem {
     this.G = this.settings.gravity;
 
     window.addEventListener('resize', () => this.resize());
+
+    this.resize();
   }
 
   // Resize the canvas to fill the window

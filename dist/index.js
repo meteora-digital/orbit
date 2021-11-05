@@ -33,6 +33,7 @@ var OrbitSystem = /*#__PURE__*/function () {
     window.addEventListener('resize', function () {
       return _this.resize();
     });
+    this.resize();
   } // Resize the canvas to fill the window
 
 
